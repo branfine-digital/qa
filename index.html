@@ -69,6 +69,14 @@
       color: #6b7280;
     }
     .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+    /* dashed legend swatch for fun days */
+    .legend-dot-dashed {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      background: #fdf4ff;
+      border: 1.5px dashed #d946ef;
+    }
     .calendar {
       background: #fff;
       border-radius: 16px;
@@ -129,9 +137,28 @@
       line-height: 1.6;
       cursor: default;
     }
-    .event-holiday  { background: #f0fdf4; color: #15803d; border-left: 2.5px solid #86efac; }
-    .event-birthday { background: #fdf2f8; color: #be185d; border-left: 2.5px solid #f9a8d4; }
-    .event-anniversary { background: #fffbeb; color: #b45309; border-left: 2.5px solid #fcd34d; }
+    /* Official company day off — solid green */
+    .event-holiday {
+      background: #f0fdf4;
+      color: #15803d;
+      border-left: 2.5px solid #86efac;
+    }
+    /* Fun / cultural observance — soft fuchsia, dashed border */
+    .event-funday {
+      background: #fdf4ff;
+      color: #a21caf;
+      border-left: 2.5px dashed #e879f9;
+    }
+    .event-birthday {
+      background: #fdf2f8;
+      color: #be185d;
+      border-left: 2.5px solid #f9a8d4;
+    }
+    .event-anniversary {
+      background: #fffbeb;
+      color: #b45309;
+      border-left: 2.5px solid #fcd34d;
+    }
     .today-indicator {
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -191,11 +218,12 @@
   <div class="instructions">
     <h3>How to update this calendar</h3>
     <ul>
-      <li>Find <code>TEAM_MEMBERS</code> near the top of this file to add/remove people or change colors.</li>
+      <li>Find <code>TEAM_MEMBERS</code> near the top to add/remove people or change colors.</li>
       <li>Add OOO: <code>{ type: 'ooo', person: 'Name', start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }</code></li>
       <li>Add birthday: <code>{ type: 'birthday', person: 'Name', date: 'YYYY-MM-DD' }</code></li>
       <li>Add anniversary: <code>{ type: 'anniversary', person: 'Name', date: 'YYYY-MM-DD', years: N }</code></li>
-      <li>Add holiday: <code>{ type: 'holiday', name: 'Holiday Name', date: 'YYYY-MM-DD' }</code></li>
+      <li>Add company holiday (day off): <code>{ type: 'holiday', name: 'Name', date: 'YYYY-MM-DD' }</code></li>
+      <li>Add fun observance (not a day off): <code>{ type: 'funday', name: 'Name', date: 'YYYY-MM-DD' }</code></li>
     </ul>
   </div>
 
@@ -212,11 +240,11 @@ const TEAM_MEMBERS = [
   { name: 'Bran',   color: '#10b981' },  // emerald
   { name: 'Deonna', color: '#8b5cf6' },  // violet
   { name: 'Atarah', color: '#06b6d4' },  // cyan
-  // Add more team members here ↓
   // { name: 'Sam', color: '#3b82f6' },
 ];
 
 const EVENTS = [
+
   // ── Out of Office ──────────────────────────────────────────
   // Format: { type: 'ooo', person: 'Name', start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }
   { type: 'ooo', person: 'Ted',   start: '2026-03-11', end: '2026-03-20' },
@@ -226,7 +254,7 @@ const EVENTS = [
   { type: 'ooo', person: 'Bella', start: '2026-04-10', end: '2026-04-10' },
   { type: 'ooo', person: 'Bran',  start: '2026-04-16', end: '2026-04-17' },
   { type: 'ooo', person: 'Bella', start: '2026-04-17', end: '2026-04-17' },
-  { type: 'ooo', person: 'Bran', start: '2026-07-07', end: '2026-07-10' },
+  { type: 'ooo', person: 'Bran',  start: '2026-07-07', end: '2026-07-10' },
 
   // ── Birthdays ──────────────────────────────────────────────
   // Format: { type: 'birthday', person: 'Name', date: 'YYYY-MM-DD' }
@@ -235,31 +263,38 @@ const EVENTS = [
   { type: 'birthday', person: 'Bella',  date: '2026-02-24' },
   { type: 'birthday', person: 'Atarah', date: '2026-02-24' },
   { type: 'birthday', person: 'Ted',    date: '2026-03-16' },
-  { type: 'birthday', person: 'Deonna',    date: '2026-10-04' },
+  { type: 'birthday', person: 'Deonna', date: '2026-10-04' },
 
   // ── Work Anniversaries ─────────────────────────────────────
   // Format: { type: 'anniversary', person: 'Name', date: 'YYYY-MM-DD', years: N }
   { type: 'anniversary', person: 'Bella',  date: '2026-05-20', years: 2 },
   { type: 'anniversary', person: 'Bran',   date: '2026-06-14', years: 5 },
   { type: 'anniversary', person: 'Deonna', date: '2026-06-14', years: 5 },
-  { type: 'anniversary', person: 'Alec', date: '2026-10-23', years: 3 },
+  { type: 'anniversary', person: 'Alec',   date: '2026-10-23', years: 3 },
 
-  // ── Company Holidays ───────────────────────────────────────
+  // ── Company Holidays (days off) ────────────────────────────
   // Format: { type: 'holiday', name: 'Holiday Name', date: 'YYYY-MM-DD' }
-  { type: 'holiday', name: "St. Patrick's Day", date: '2026-03-17' },
-  { type: 'holiday', name: "April Fools' Day",  date: '2026-04-01' },
-  { type: 'holiday', name: 'Easter Sunday',      date: '2026-04-05' },
-  { type: 'holiday', name: 'Earth Day',          date: '2026-04-22' },
-  { type: 'holiday', name: 'Cinco de Mayo',      date: '2026-05-05' },
-  { type: 'holiday', name: 'Memorial Day',       date: '2026-05-25' },
-  { type: 'holiday', name: 'Independence Day',       date: '2026-07-03' },
-  { type: 'holiday', name: 'Labor Day',       date: '2026-09-07' },
-  { type: 'holiday', name: 'Thanksgiving Day',       date: '2026-11-26' },
-  { type: 'holiday', name: 'Black Friday',       date: '2026-11-27' },
-  { type: 'holiday', name: 'Christmas Eve',       date: '2026-12-24' },
-  { type: 'holiday', name: 'Christmas Day',       date: '2026-12-25' },
-  { type: 'holiday', name: 'New Years Eve',       date: '2026-12-31' },
-  { type: 'holiday', name: 'New Years Day',       date: '2027-01-01' },
+  { type: 'holiday', name: "New Year's Day",          date: '2026-01-01' },
+  { type: 'holiday', name: 'MLK Day',                 date: '2026-01-19' },
+  { type: 'holiday', name: 'Memorial Day',            date: '2026-05-25' },
+  { type: 'holiday', name: 'Independence Day',        date: '2026-07-03' },
+  { type: 'holiday', name: 'Labor Day',               date: '2026-09-07' },
+  { type: 'holiday', name: 'Thanksgiving',            date: '2026-11-26' },
+  { type: 'holiday', name: 'Black Friday',            date: '2026-11-27' },
+  { type: 'holiday', name: 'Christmas Eve',           date: '2026-12-24' },
+  { type: 'holiday', name: 'Christmas Day',           date: '2026-12-25' },
+  { type: 'holiday', name: "New Year's Eve",          date: '2026-12-31' },
+  { type: 'holiday', name: "New Year's Day",          date: '2027-01-01' },
+
+  // ── Fun Observances (not days off — just for fun ✨) ────────
+  // Format: { type: 'funday', name: 'Name', date: 'YYYY-MM-DD' }
+  { type: 'funday', name: "Valentine's Day",  date: '2026-02-14' },
+  { type: 'funday', name: "St. Patrick's Day",date: '2026-03-17' },
+  { type: 'funday', name: "April Fools'",     date: '2026-04-01' },
+  { type: 'funday', name: 'Easter',           date: '2026-04-05' },
+  { type: 'funday', name: 'Earth Day',        date: '2026-04-22' },
+  { type: 'funday', name: 'Cinco de Mayo',    date: '2026-05-05' },
+  { type: 'funday', name: 'Halloween',        date: '2026-10-31' },
 ];
 
 // ============================================================
@@ -297,6 +332,17 @@ function lighten(hex, alpha = 0.13) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
+// Fun day emoji map
+const FUNDAY_EMOJI = {
+  "Valentine's Day": '💝',
+  "St. Patrick's Day": '🍀',
+  "April Fools'": '🃏',
+  'Easter': '🐣',
+  'Earth Day': '🌍',
+  'Cinco de Mayo': '🇲🇽',
+  'Halloween': '🎃',
+};
+
 let currentYear, currentMonth;
 const eventIndex = buildIndex();
 
@@ -323,7 +369,10 @@ function renderLegend() {
   });
   html += `
     <div class="legend-item" style="margin-left:4px">
-      <div class="legend-dot" style="background:#86efac"></div><span>Holiday</span>
+      <div class="legend-dot" style="background:#86efac"></div><span>Day Off</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot-dashed"></div><span>Fun Day</span>
     </div>
     <div class="legend-item">
       <div class="legend-dot" style="background:#f9a8d4"></div><span>Birthday</span>
@@ -360,16 +409,25 @@ function renderGrid() {
     let evHtml = '<div class="events">';
 
     if (!isOtherMonth) {
+      // Official company holidays (days off)
       dayEvents.filter(e => e.type === 'holiday').forEach(e => {
-        evHtml += `<div class="event-pill event-holiday" title="${e.name}">🏖️ ${e.name}</div>`;
+        evHtml += `<div class="event-pill event-holiday" title="${e.name} — Company Holiday">🏖️ ${e.name}</div>`;
       });
+      // Fun observances
+      dayEvents.filter(e => e.type === 'funday').forEach(e => {
+        const emoji = FUNDAY_EMOJI[e.name] || '✨';
+        evHtml += `<div class="event-pill event-funday" title="${e.name}">${emoji} ${e.name}</div>`;
+      });
+      // Birthdays
       dayEvents.filter(e => e.type === 'birthday').forEach(e => {
         evHtml += `<div class="event-pill event-birthday" title="${e.person}'s Birthday">🎂 ${e.person}</div>`;
       });
+      // Anniversaries
       dayEvents.filter(e => e.type === 'anniversary').forEach(e => {
         const yrs = e.years ? ` (${e.years}yr)` : '';
         evHtml += `<div class="event-pill event-anniversary" title="${e.person}'s Work Anniversary">🏆 ${e.person}${yrs}</div>`;
       });
+      // OOO
       const seen = new Set();
       dayEvents.filter(e => e.type === 'ooo').forEach(e => {
         if (seen.has(e.person)) return;
