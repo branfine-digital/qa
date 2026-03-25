@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background: #f5f6fa;
@@ -15,31 +14,15 @@
       min-height: 100vh;
       padding: 32px 24px 64px;
     }
-
-    .app {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    /* ── Header ── */
+    .app { max-width: 1100px; margin: 0 auto; }
     .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 28px;
     }
-
-    .header h1 {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      color: #111827;
-    }
-
-    .header h1 span {
-      color: #6366f1;
-    }
-
+    .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: #111827; }
+    .header h1 span { color: #6366f1; }
     .month-nav {
       display: flex;
       align-items: center;
@@ -49,7 +32,6 @@
       border-radius: 10px;
       padding: 4px;
     }
-
     .month-nav button {
       background: none;
       border: none;
@@ -62,12 +44,7 @@
       font-size: 16px;
       transition: background 0.15s, color 0.15s;
     }
-
-    .month-nav button:hover {
-      background: #f3f4f6;
-      color: #111827;
-    }
-
+    .month-nav button:hover { background: #f3f4f6; color: #111827; }
     .month-label {
       font-size: 15px;
       font-weight: 600;
@@ -76,16 +53,13 @@
       text-align: center;
       padding: 0 8px;
     }
-
-    /* ── Legend ── */
     .legend {
       display: flex;
-      gap: 20px;
+      gap: 16px;
       flex-wrap: wrap;
       margin-bottom: 20px;
       align-items: center;
     }
-
     .legend-item {
       display: flex;
       align-items: center;
@@ -94,14 +68,7 @@
       font-weight: 500;
       color: #6b7280;
     }
-
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 3px;
-    }
-
-    /* ── Calendar Grid ── */
+    .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
     .calendar {
       background: #fff;
       border-radius: 16px;
@@ -109,14 +76,12 @@
       overflow: hidden;
       box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
     }
-
     .dow-row {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       background: #f9fafb;
       border-bottom: 1px solid #e5e7eb;
     }
-
     .dow-cell {
       padding: 12px 8px;
       text-align: center;
@@ -126,24 +91,16 @@
       text-transform: uppercase;
       color: #9ca3af;
     }
-
-    .days-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-    }
-
+    .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
     .day-cell {
       min-height: 110px;
       border-right: 1px solid #f0f1f5;
       border-bottom: 1px solid #f0f1f5;
       padding: 10px 8px 8px;
       position: relative;
-      vertical-align: top;
     }
-
     .day-cell:nth-child(7n) { border-right: none; }
     .day-cell.other-month { background: #fafafa; }
-
     .day-number {
       font-size: 13px;
       font-weight: 600;
@@ -155,22 +112,12 @@
       justify-content: center;
       border-radius: 50%;
       margin-bottom: 4px;
-      transition: background 0.15s;
     }
-
     .day-cell.other-month .day-number { color: #d1d5db; }
-    .day-cell.today .day-number {
-      background: #6366f1;
-      color: #fff;
-      font-weight: 700;
-    }
-
+    .day-cell.today .day-number { background: #6366f1; color: #fff; font-weight: 700; }
     .day-cell.weekend .day-number { color: #9ca3af; }
     .day-cell.other-month.weekend .day-number { color: #e5e7eb; }
-
-    /* ── Events ── */
     .events { display: flex; flex-direction: column; gap: 3px; }
-
     .event-pill {
       font-size: 11px;
       font-weight: 500;
@@ -182,35 +129,15 @@
       line-height: 1.6;
       cursor: default;
     }
-
-    .event-holiday {
-      background: #f0fdf4;
-      color: #15803d;
-      border-left: 2.5px solid #86efac;
-    }
-
-    .event-birthday {
-      background: #fdf2f8;
-      color: #be185d;
-      border-left: 2.5px solid #f9a8d4;
-    }
-
-    .event-anniversary {
-      background: #fffbeb;
-      color: #b45309;
-      border-left: 2.5px solid #fcd34d;
-    }
-
-    /* ── Today banner ── */
+    .event-holiday  { background: #f0fdf4; color: #15803d; border-left: 2.5px solid #86efac; }
+    .event-birthday { background: #fdf2f8; color: #be185d; border-left: 2.5px solid #f9a8d4; }
+    .event-anniversary { background: #fffbeb; color: #b45309; border-left: 2.5px solid #fcd34d; }
     .today-indicator {
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
       background: #6366f1;
-      border-radius: 0;
     }
-
-    /* ── Instructions panel ── */
     .instructions {
       margin-top: 28px;
       background: #fff;
@@ -221,14 +148,7 @@
       line-height: 1.7;
       color: #6b7280;
     }
-
-    .instructions h3 {
-      font-size: 13px;
-      font-weight: 600;
-      color: #374151;
-      margin-bottom: 10px;
-    }
-
+    .instructions h3 { font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 10px; }
     .instructions code {
       font-family: 'SF Mono', 'Fira Code', monospace;
       background: #f3f4f6;
@@ -237,18 +157,8 @@
       font-size: 12px;
       color: #4b5563;
     }
-
-    .instructions ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .instructions ul li::before {
-      content: '→ ';
-      color: #9ca3af;
-    }
+    .instructions ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .instructions ul li::before { content: '→ '; color: #9ca3af; }
   </style>
 </head>
 <body>
@@ -257,9 +167,9 @@
   <div class="header">
     <h1>QA Team <span>Calendar</span></h1>
     <div class="month-nav">
-      <button id="prev" title="Previous month">&#8249;</button>
+      <button id="prev">&#8249;</button>
       <div class="month-label" id="month-label"></div>
-      <button id="next" title="Next month">&#8250;</button>
+      <button id="next">&#8250;</button>
     </div>
   </div>
 
@@ -281,26 +191,27 @@
   <div class="instructions">
     <h3>How to update this calendar</h3>
     <ul>
-      <li>Open this file in a text editor and find the <code>TEAM_MEMBERS</code> array to add/remove people and change their colors.</li>
-      <li>Add OOO periods in <code>EVENTS</code>: <code>{ type: 'ooo', person: 'Name', start: '2026-MM-DD', end: '2026-MM-DD' }</code></li>
-      <li>Add birthdays: <code>{ type: 'birthday', person: 'Name', date: '2026-MM-DD' }</code></li>
-      <li>Add anniversaries: <code>{ type: 'anniversary', person: 'Name', date: '2026-MM-DD', years: 3 }</code></li>
-      <li>Add holidays: <code>{ type: 'holiday', name: 'Holiday Name', date: '2026-MM-DD' }</code></li>
+      <li>Find <code>TEAM_MEMBERS</code> near the top of this file to add/remove people or change colors.</li>
+      <li>Add OOO: <code>{ type: 'ooo', person: 'Name', start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }</code></li>
+      <li>Add birthday: <code>{ type: 'birthday', person: 'Name', date: 'YYYY-MM-DD' }</code></li>
+      <li>Add anniversary: <code>{ type: 'anniversary', person: 'Name', date: 'YYYY-MM-DD', years: N }</code></li>
+      <li>Add holiday: <code>{ type: 'holiday', name: 'Holiday Name', date: 'YYYY-MM-DD' }</code></li>
     </ul>
   </div>
 
 </div>
-
 <script>
 // ============================================================
 //  ✏️  EDIT THIS SECTION TO UPDATE THE CALENDAR
 // ============================================================
 
 const TEAM_MEMBERS = [
-  { name: 'Ted',   color: '#6366f1' },   // indigo
-  { name: 'Alec',  color: '#ec4899' },   // pink
-  { name: 'Bella', color: '#f59e0b' },   // amber
-  { name: 'Bran',  color: '#10b981' },   // emerald
+  { name: 'Ted',    color: '#6366f1' },  // indigo
+  { name: 'Alec',   color: '#ec4899' },  // pink
+  { name: 'Bella',  color: '#f59e0b' },  // amber
+  { name: 'Bran',   color: '#10b981' },  // emerald
+  { name: 'Deonna', color: '#8b5cf6' },  // violet
+  { name: 'Atarah', color: '#06b6d4' },  // cyan
   // Add more team members here ↓
   // { name: 'Sam', color: '#3b82f6' },
 ];
@@ -308,31 +219,36 @@ const TEAM_MEMBERS = [
 const EVENTS = [
   // ── Out of Office ──────────────────────────────────────────
   // Format: { type: 'ooo', person: 'Name', start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }
-  { type: 'ooo', person: 'Ted',  start: '2026-03-11', end: '2026-03-20' },
-  { type: 'ooo', person: 'Ted',  start: '2026-03-23', end: '2026-03-27' },
-  { type: 'ooo', person: 'Ted',  start: '2026-03-30', end: '2026-04-01' },
-  { type: 'ooo', person: 'Alec', start: '2026-03-30', end: '2026-03-31' },
-  { type: 'ooo', person: 'Bella',start: '2026-04-10', end: '2026-04-10' },
-  { type: 'ooo', person: 'Bran', start: '2026-04-16', end: '2026-04-17' },
-  { type: 'ooo', person: 'Bella',start: '2026-04-17', end: '2026-04-17' },
+  { type: 'ooo', person: 'Ted',   start: '2026-03-11', end: '2026-03-20' },
+  { type: 'ooo', person: 'Ted',   start: '2026-03-23', end: '2026-03-27' },
+  { type: 'ooo', person: 'Ted',   start: '2026-03-30', end: '2026-04-01' },
+  { type: 'ooo', person: 'Alec',  start: '2026-03-30', end: '2026-03-31' },
+  { type: 'ooo', person: 'Bella', start: '2026-04-10', end: '2026-04-10' },
+  { type: 'ooo', person: 'Bran',  start: '2026-04-16', end: '2026-04-17' },
+  { type: 'ooo', person: 'Bella', start: '2026-04-17', end: '2026-04-17' },
 
   // ── Birthdays ──────────────────────────────────────────────
   // Format: { type: 'birthday', person: 'Name', date: 'YYYY-MM-DD' }
-  { type: 'birthday', person: 'Ted', date: '2026-03-16' },
-  { type: 'birthday', person: 'Alec', date: '2026-02-17' },
-  { type: 'birthday', person: 'Bran', date: '2026-02-17' },
-  { type: 'birthday', person: 'Bella', date: '2026-02-24' },
+  { type: 'birthday', person: 'Alec',   date: '2026-02-17' },
+  { type: 'birthday', person: 'Bran',   date: '2026-02-17' },
+  { type: 'birthday', person: 'Bella',  date: '2026-02-24' },
   { type: 'birthday', person: 'Atarah', date: '2026-02-24' },
+  { type: 'birthday', person: 'Ted',    date: '2026-03-16' },
+
   // ── Work Anniversaries ─────────────────────────────────────
   // Format: { type: 'anniversary', person: 'Name', date: 'YYYY-MM-DD', years: N }
-  // { type: 'anniversary', person: 'Alec', date: '2026-05-01', years: 2 },
+  { type: 'anniversary', person: 'Bella',  date: '2026-05-20', years: 2 },
+  { type: 'anniversary', person: 'Bran',   date: '2026-06-14', years: 5 },
+  { type: 'anniversary', person: 'Deonna', date: '2026-06-14', years: 5 },
 
   // ── Company Holidays ───────────────────────────────────────
   // Format: { type: 'holiday', name: 'Holiday Name', date: 'YYYY-MM-DD' }
-  { type: 'holiday', name: "St. Patrick's Day",  date: '2026-03-17' },
-  { type: 'holiday', name: "April Fools' Day",   date: '2026-04-01' },
-  { type: 'holiday', name: 'Easter Sunday',       date: '2026-04-05' },
-  { type: 'holiday', name: 'Earth Day',           date: '2026-04-22' },
+  { type: 'holiday', name: "St. Patrick's Day", date: '2026-03-17' },
+  { type: 'holiday', name: "April Fools' Day",  date: '2026-04-01' },
+  { type: 'holiday', name: 'Easter Sunday',      date: '2026-04-05' },
+  { type: 'holiday', name: 'Earth Day',          date: '2026-04-22' },
+  { type: 'holiday', name: 'Cinco de Mayo',      date: '2026-05-05' },
+  { type: 'holiday', name: 'Memorial Day',       date: '2026-05-25' },
 ];
 
 // ============================================================
@@ -342,16 +258,9 @@ const EVENTS = [
 const MONTHS = ['January','February','March','April','May','June',
                 'July','August','September','October','November','December'];
 
-// Build a quick lookup: "YYYY-MM-DD" → [events]
-function buildIndex(year, month) {
+function buildIndex() {
   const map = {};
-
-  const add = (dateStr, event) => {
-    if (!map[dateStr]) map[dateStr] = [];
-    map[dateStr].push(event);
-  };
-
-  // Index person colors
+  const add = (key, event) => { if (!map[key]) map[key] = []; map[key].push(event); };
   const personColors = {};
   TEAM_MEMBERS.forEach(m => { personColors[m.name] = m.color; });
 
@@ -360,32 +269,25 @@ function buildIndex(year, month) {
       let cur = new Date(ev.start + 'T00:00:00');
       const end = new Date(ev.end + 'T00:00:00');
       while (cur <= end) {
-        const key = cur.toISOString().slice(0, 10);
-        add(key, { ...ev, color: personColors[ev.person] || '#94a3b8' });
+        add(cur.toISOString().slice(0,10), { ...ev, color: personColors[ev.person] || '#94a3b8' });
         cur.setDate(cur.getDate() + 1);
       }
     } else {
-      const key = ev.date;
-      add(key, { ...ev, color: personColors[ev.person] || '#94a3b8' });
+      add(ev.date, { ...ev, color: personColors[ev.person] || '#94a3b8' });
     }
   });
-
   return map;
 }
 
-function hexToRgb(hex) {
+function lighten(hex, alpha = 0.13) {
   const r = parseInt(hex.slice(1,3),16);
   const g = parseInt(hex.slice(3,5),16);
   const b = parseInt(hex.slice(5,7),16);
-  return { r, g, b };
-}
-
-function lighten(hex, alpha = 0.12) {
-  const { r, g, b } = hexToRgb(hex);
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
 let currentYear, currentMonth;
+const eventIndex = buildIndex();
 
 function init() {
   const today = new Date();
@@ -397,116 +299,91 @@ function init() {
 function render() {
   renderLegend();
   renderGrid();
-  document.getElementById('month-label').textContent =
-    MONTHS[currentMonth] + ' ' + currentYear;
+  document.getElementById('month-label').textContent = MONTHS[currentMonth] + ' ' + currentYear;
 }
 
 function renderLegend() {
-  const el = document.getElementById('legend');
   let html = '';
-
   TEAM_MEMBERS.forEach(m => {
     html += `<div class="legend-item">
-      <div class="legend-dot" style="background:${m.color}; border-radius:3px;"></div>
+      <div class="legend-dot" style="background:${m.color}"></div>
       <span>${m.name} — OOO</span>
     </div>`;
   });
-
-  html += `<div class="legend-item" style="margin-left:8px">
-    <div class="legend-dot" style="background:#86efac; border-radius:3px;"></div>
-    <span>Holiday</span>
-  </div>
-  <div class="legend-item">
-    <div class="legend-dot" style="background:#f9a8d4; border-radius:3px;"></div>
-    <span>Birthday</span>
-  </div>
-  <div class="legend-item">
-    <div class="legend-dot" style="background:#fcd34d; border-radius:3px;"></div>
-    <span>Anniversary</span>
-  </div>`;
-
-  el.innerHTML = html;
+  html += `
+    <div class="legend-item" style="margin-left:4px">
+      <div class="legend-dot" style="background:#86efac"></div><span>Holiday</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#f9a8d4"></div><span>Birthday</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#fcd34d"></div><span>Anniversary</span>
+    </div>`;
+  document.getElementById('legend').innerHTML = html;
 }
 
 function renderGrid() {
   const grid = document.getElementById('days-grid');
-  const today = new Date();
-  today.setHours(0,0,0,0);
-
+  const today = new Date(); today.setHours(0,0,0,0);
   const firstDay = new Date(currentYear, currentMonth, 1);
   const lastDay  = new Date(currentYear, currentMonth + 1, 0);
-  const startPad = firstDay.getDay(); // 0=Sun
+  const startPad = firstDay.getDay();
   const totalCells = Math.ceil((startPad + lastDay.getDate()) / 7) * 7;
 
-  const eventIndex = buildIndex(currentYear, currentMonth);
-
   let html = '';
-
   for (let i = 0; i < totalCells; i++) {
     const cellDate = new Date(currentYear, currentMonth, 1 - startPad + i);
     cellDate.setHours(0,0,0,0);
-
     const isOtherMonth = cellDate.getMonth() !== currentMonth;
-    const isToday = cellDate.getTime() === today.getTime();
-    const isWeekend = cellDate.getDay() === 0 || cellDate.getDay() === 6;
+    const isToday      = cellDate.getTime() === today.getTime();
+    const isWeekend    = cellDate.getDay() === 0 || cellDate.getDay() === 6;
+    const dateKey      = cellDate.toISOString().slice(0,10);
+    const dayEvents    = eventIndex[dateKey] || [];
 
-    const dateKey = cellDate.toISOString().slice(0,10);
-    const dayEvents = eventIndex[dateKey] || [];
-
-    let classes = 'day-cell';
-    if (isOtherMonth) classes += ' other-month';
-    if (isToday) classes += ' today';
-    if (isWeekend) classes += ' weekend';
+    let cls = 'day-cell';
+    if (isOtherMonth) cls += ' other-month';
+    if (isToday)      cls += ' today';
+    if (isWeekend)    cls += ' weekend';
 
     let evHtml = '<div class="events">';
 
-    // Holidays first (top of cell)
-    dayEvents.filter(e => e.type === 'holiday').forEach(e => {
-      evHtml += `<div class="event-pill event-holiday" title="${e.name}">🏖️ ${e.name}</div>`;
-    });
-
-    // Birthdays
-    dayEvents.filter(e => e.type === 'birthday').forEach(e => {
-      evHtml += `<div class="event-pill event-birthday" title="${e.person}'s Birthday">🎂 ${e.person}</div>`;
-    });
-
-    // Anniversaries
-    dayEvents.filter(e => e.type === 'anniversary').forEach(e => {
-      const yrs = e.years ? ` (${e.years}yr)` : '';
-      evHtml += `<div class="event-pill event-anniversary" title="${e.person}'s Work Anniversary">🎉 ${e.person}${yrs}</div>`;
-    });
-
-    // OOO (grouped by person, colored)
-    const seen = new Set();
-    dayEvents.filter(e => e.type === 'ooo').forEach(e => {
-      if (seen.has(e.person)) return;
-      seen.add(e.person);
-      const bg = lighten(e.color, 0.13);
-      evHtml += `<div class="event-pill" style="background:${bg}; color:${e.color}; border-left:2.5px solid ${e.color};" title="${e.person} — Out of Office">✈ ${e.person}</div>`;
-    });
+    if (!isOtherMonth) {
+      dayEvents.filter(e => e.type === 'holiday').forEach(e => {
+        evHtml += `<div class="event-pill event-holiday" title="${e.name}">🏖️ ${e.name}</div>`;
+      });
+      dayEvents.filter(e => e.type === 'birthday').forEach(e => {
+        evHtml += `<div class="event-pill event-birthday" title="${e.person}'s Birthday">🎂 ${e.person}</div>`;
+      });
+      dayEvents.filter(e => e.type === 'anniversary').forEach(e => {
+        const yrs = e.years ? ` (${e.years}yr)` : '';
+        evHtml += `<div class="event-pill event-anniversary" title="${e.person}'s Work Anniversary">🏆 ${e.person}${yrs}</div>`;
+      });
+      const seen = new Set();
+      dayEvents.filter(e => e.type === 'ooo').forEach(e => {
+        if (seen.has(e.person)) return;
+        seen.add(e.person);
+        evHtml += `<div class="event-pill" style="background:${lighten(e.color)}; color:${e.color}; border-left:2.5px solid ${e.color};" title="${e.person} — Out of Office">✈ ${e.person}</div>`;
+      });
+    }
 
     evHtml += '</div>';
 
-    html += `<div class="${classes}">
+    html += `<div class="${cls}">
       ${isToday ? '<div class="today-indicator"></div>' : ''}
       <div class="day-number">${cellDate.getDate()}</div>
-      ${!isOtherMonth ? evHtml : ''}
+      ${evHtml}
     </div>`;
   }
-
   grid.innerHTML = html;
 }
 
-// Navigation
 document.getElementById('prev').addEventListener('click', () => {
-  currentMonth--;
-  if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+  if (--currentMonth < 0) { currentMonth = 11; currentYear--; }
   render();
 });
-
 document.getElementById('next').addEventListener('click', () => {
-  currentMonth++;
-  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+  if (++currentMonth > 11) { currentMonth = 0; currentYear++; }
   render();
 });
 
