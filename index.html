@@ -15,14 +15,53 @@
       padding: 32px 24px 64px;
     }
     .app { max-width: 1100px; margin: 0 auto; }
+
+    /* ── Header ── */
     .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 28px;
     }
-    .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: #111827; }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #111827;
+    }
     .header h1 span { color: #6366f1; }
+
+    /* ── Nav cluster (Today btn + month nav) ── */
+    .nav-cluster {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .today-btn {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 0 14px;
+      height: 42px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #6b7280;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .today-btn:hover {
+      background: #f3f4f6;
+      color: #111827;
+      border-color: #d1d5db;
+    }
+    .today-btn.is-current {
+      color: #6366f1;
+      border-color: #c7d2fe;
+      background: #eef2ff;
+    }
+
     .month-nav {
       display: flex;
       align-items: center;
@@ -39,7 +78,9 @@
       width: 32px;
       height: 32px;
       border-radius: 7px;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: #6b7280;
       font-size: 16px;
       transition: background 0.15s, color 0.15s;
@@ -53,6 +94,8 @@
       text-align: center;
       padding: 0 8px;
     }
+
+    /* ── Legend ── */
     .legend {
       display: flex;
       gap: 16px;
@@ -69,14 +112,12 @@
       color: #6b7280;
     }
     .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
-    /* dashed legend swatch for fun days */
     .legend-dot-dashed {
-      width: 10px;
-      height: 10px;
-      border-radius: 3px;
-      background: #fdf4ff;
-      border: 1.5px dashed #d946ef;
+      width: 10px; height: 10px; border-radius: 3px;
+      background: #fdf4ff; border: 1.5px dashed #d946ef;
     }
+
+    /* ── Calendar shell ── */
     .calendar {
       background: #fff;
       border-radius: 16px;
@@ -125,6 +166,7 @@
     .day-cell.today .day-number { background: #6366f1; color: #fff; font-weight: 700; }
     .day-cell.weekend .day-number { color: #9ca3af; }
     .day-cell.other-month.weekend .day-number { color: #e5e7eb; }
+
     .events { display: flex; flex-direction: column; gap: 3px; }
     .event-pill {
       font-size: 11px;
@@ -137,55 +179,24 @@
       line-height: 1.6;
       cursor: default;
     }
+
     /* Official company day off — solid green */
-    .event-holiday {
-      background: #f0fdf4;
-      color: #15803d;
-      border-left: 2.5px solid #86efac;
-    }
-    /* Fun / cultural observance — soft fuchsia, dashed border */
-    .event-funday {
-      background: #fdf4ff;
-      color: #a21caf;
-      border-left: 2.5px dashed #e879f9;
-    }
-    .event-birthday {
-      background: #fdf2f8;
-      color: #be185d;
-      border-left: 2.5px solid #f9a8d4;
-    }
-    .event-anniversary {
-      background: #fffbeb;
-      color: #b45309;
-      border-left: 2.5px solid #fcd34d;
-    }
+    .event-holiday  { background: #f0fdf4; color: #15803d; border-left: 2.5px solid #86efac; }
+    /* Fun / cultural observance — soft fuchsia, dashed */
+    .event-funday   { background: #fdf4ff; color: #a21caf; border-left: 2.5px dashed #e879f9; }
+    /* Team-wide meetings — sky blue */
+    .event-meeting  { background: #eff6ff; color: #1d4ed8; border-left: 2.5px solid #93c5fd; }
+    /* Birthdays */
+    .event-birthday { background: #fdf2f8; color: #be185d; border-left: 2.5px solid #f9a8d4; }
+    /* Work anniversaries */
+    .event-anniversary { background: #fffbeb; color: #b45309; border-left: 2.5px solid #fcd34d; }
+
     .today-indicator {
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
       background: #6366f1;
     }
-    .instructions {
-      margin-top: 28px;
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 20px 24px;
-      font-size: 13px;
-      line-height: 1.7;
-      color: #6b7280;
-    }
-    .instructions h3 { font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 10px; }
-    .instructions code {
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      background: #f3f4f6;
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-size: 12px;
-      color: #4b5563;
-    }
-    .instructions ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-    .instructions ul li::before { content: '→ '; color: #9ca3af; }
   </style>
 </head>
 <body>
@@ -193,10 +204,13 @@
 
   <div class="header">
     <h1>QA Team <span>Calendar</span></h1>
-    <div class="month-nav">
-      <button id="prev">&#8249;</button>
-      <div class="month-label" id="month-label"></div>
-      <button id="next">&#8250;</button>
+    <div class="nav-cluster">
+      <button class="today-btn" id="today-btn">Today</button>
+      <div class="month-nav">
+        <button id="prev">&#8249;</button>
+        <div class="month-label" id="month-label"></div>
+        <button id="next">&#8250;</button>
+      </div>
     </div>
   </div>
 
@@ -216,30 +230,31 @@
   </div>
 
 </div>
+
 <script>
 // ============================================================
-//  ✏️  EDIT THIS SECTION TO UPDATE THE CALENDAR
+// ✏️ EDIT THIS SECTION TO UPDATE THE CALENDAR
 // ============================================================
 
 const TEAM_MEMBERS = [
-  { name: 'Ted',    color: '#6366f1' },  // indigo
-  { name: 'Alec',   color: '#ec4899' },  // pink
-  { name: 'Bella',  color: '#f59e0b' },  // amber
-  { name: 'Bran',   color: '#10b981' },  // emerald
-  { name: 'Deonna', color: '#8b5cf6' },  // violet
-  { name: 'Atarah', color: '#06b6d4' },  // cyan
+  { name: 'Ted',    color: '#6366f1' }, // indigo
+  { name: 'Alec',   color: '#ec4899' }, // pink
+  { name: 'Bella',  color: '#f59e0b' }, // amber
+  { name: 'Bran',   color: '#10b981' }, // emerald
+  { name: 'Deonna', color: '#8b5cf6' }, // violet
+  { name: 'Atarah', color: '#06b6d4' }, // cyan
   // { name: 'Sam', color: '#3b82f6' },
 ];
 
 const EVENTS = [
 
-  // ── Out of Office ──────────────────────────────────────────
+  // ── Out of Office ─────────────────────────────────────────
   // Format: { type: 'ooo', person: 'Name', start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }
   { type: 'ooo', person: 'Ted',   start: '2026-03-11', end: '2026-03-20' },
   { type: 'ooo', person: 'Ted',   start: '2026-03-23', end: '2026-03-27' },
   { type: 'ooo', person: 'Ted',   start: '2026-03-30', end: '2026-04-01' },
   { type: 'ooo', person: 'Alec',  start: '2026-03-30', end: '2026-03-31' },
-  { type: 'ooo', person: 'Bran',  start: '2026-04-10', end: '2026-04-10' },
+  { type: 'ooo', person: 'Bran', start: '2026-04-10', end: '2026-04-10' },
   { type: 'ooo', person: 'Bella', start: '2026-04-10', end: '2026-04-10' },
   { type: 'ooo', person: 'Bran',  start: '2026-04-16', end: '2026-04-17' },
   { type: 'ooo', person: 'Bella', start: '2026-04-17', end: '2026-04-17' },
@@ -254,28 +269,28 @@ const EVENTS = [
   { type: 'birthday', person: 'Ted',    date: '2026-03-16' },
   { type: 'birthday', person: 'Deonna', date: '2026-10-04' },
 
-  // ── Work Anniversaries ─────────────────────────────────────
+  // ── Work Anniversaries ────────────────────────────────────
   // Format: { type: 'anniversary', person: 'Name', date: 'YYYY-MM-DD', years: N }
   { type: 'anniversary', person: 'Bella',  date: '2026-05-20', years: 2 },
   { type: 'anniversary', person: 'Bran',   date: '2026-06-14', years: 5 },
   { type: 'anniversary', person: 'Deonna', date: '2026-06-14', years: 5 },
   { type: 'anniversary', person: 'Alec',   date: '2026-10-23', years: 3 },
 
-  // ── Company Holidays (days off) ────────────────────────────
+  // ── Company Holidays (days off) ───────────────────────────
   // Format: { type: 'holiday', name: 'Holiday Name', date: 'YYYY-MM-DD' }
-  { type: 'holiday', name: "New Year's Day",          date: '2026-01-01' },
-  { type: 'holiday', name: 'MLK Day',                 date: '2026-01-19' },
-  { type: 'holiday', name: 'Memorial Day',            date: '2026-05-25' },
-  { type: 'holiday', name: 'Independence Day',        date: '2026-07-03' },
-  { type: 'holiday', name: 'Labor Day',               date: '2026-09-07' },
-  { type: 'holiday', name: 'Thanksgiving',            date: '2026-11-26' },
-  { type: 'holiday', name: 'Black Friday',            date: '2026-11-27' },
-  { type: 'holiday', name: 'Christmas Eve',           date: '2026-12-24' },
-  { type: 'holiday', name: 'Christmas Day',           date: '2026-12-25' },
-  { type: 'holiday', name: "New Year's Eve",          date: '2026-12-31' },
-  { type: 'holiday', name: "New Year's Day",          date: '2027-01-01' },
+  { type: 'holiday', name: "New Year's Day",  date: '2026-01-01' },
+  { type: 'holiday', name: 'MLK Day',         date: '2026-01-19' },
+  { type: 'holiday', name: 'Memorial Day',    date: '2026-05-25' },
+  { type: 'holiday', name: 'Independence Day',date: '2026-07-03' },
+  { type: 'holiday', name: 'Labor Day',       date: '2026-09-07' },
+  { type: 'holiday', name: 'Thanksgiving',    date: '2026-11-26' },
+  { type: 'holiday', name: 'Black Friday',    date: '2026-11-27' },
+  { type: 'holiday', name: 'Christmas Eve',   date: '2026-12-24' },
+  { type: 'holiday', name: 'Christmas Day',   date: '2026-12-25' },
+  { type: 'holiday', name: "New Year's Eve",  date: '2026-12-31' },
+  { type: 'holiday', name: "New Year's Day",  date: '2027-01-01' },
 
-  // ── Fun Observances (not days off — just for fun ✨) ────────
+  // ── Fun Observances (not days off — just for fun ✨) ───────
   // Format: { type: 'funday', name: 'Name', date: 'YYYY-MM-DD' }
   { type: 'funday', name: "Valentine's Day",  date: '2026-02-14' },
   { type: 'funday', name: "St. Patrick's Day",date: '2026-03-17' },
@@ -284,10 +299,42 @@ const EVENTS = [
   { type: 'funday', name: 'Earth Day',        date: '2026-04-22' },
   { type: 'funday', name: 'Cinco de Mayo',    date: '2026-05-05' },
   { type: 'funday', name: 'Halloween',        date: '2026-10-31' },
+
+  // ── Team-wide Meetings ────────────────────────────────────
+  // Format: { type: 'meeting', name: 'Meeting Name', date: 'YYYY-MM-DD' }
+
+  // Monthly Team Meeting — first Tuesday of each month
+  { type: 'meeting', name: 'Monthly Team Meeting', date: '2026-03-03' },
+  { type: 'meeting', name: 'Monthly Team Meeting', date: '2026-04-07' },
+  { type: 'meeting', name: 'Monthly Team Meeting', date: '2026-05-05' },
+  { type: 'meeting', name: 'Monthly Team Meeting', date: '2026-06-02' },
+  { type: 'meeting', name: 'Monthly Team Meeting', date: '2026-07-07' },
+  { type: 'meeting', name: 'Monthly Team Meeting', date: '2026-08-04' },
+  { type: 'meeting', name: 'Monthly Team Meeting', date: '2026-09-01' },
+  { type: 'meeting', name: 'Monthly Team Meeting', date: '2026-10-06' },
+  { type: 'meeting', name: 'Monthly Team Meeting', date: '2026-11-03' },
+  { type: 'meeting', name: 'Monthly Team Meeting', date: '2026-12-01' },
+
+  // Focus Sprint — every Thursday in March 2026
+  { type: 'meeting', name: 'Focus Sprint', date: '2026-03-05' },
+  { type: 'meeting', name: 'Focus Sprint', date: '2026-03-12' },
+  { type: 'meeting', name: 'Focus Sprint', date: '2026-03-19' },
+  { type: 'meeting', name: 'Focus Sprint', date: '2026-03-26' },
+
+  // QA Team Weekly Meeting — every Monday in March 2026
+  { type: 'meeting', name: 'QA Team Weekly', date: '2026-03-02' },
+  { type: 'meeting', name: 'QA Team Weekly', date: '2026-03-09' },
+  { type: 'meeting', name: 'QA Team Weekly', date: '2026-03-16' },
+  { type: 'meeting', name: 'QA Team Weekly', date: '2026-03-23' },
+  { type: 'meeting', name: 'QA Team Weekly', date: '2026-03-30' },
+
+  // Other team-wide events
+  { type: 'meeting', name: "Let's Try New Tools", date: '2026-04-03' },
+
 ];
 
 // ============================================================
-//  Calendar Engine — no need to edit below this line
+// Calendar Engine — no need to edit below this line
 // ============================================================
 
 const MONTHS = ['January','February','March','April','May','June',
@@ -321,15 +368,21 @@ function lighten(hex, alpha = 0.13) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
-// Fun day emoji map
 const FUNDAY_EMOJI = {
-  "Valentine's Day": '💝',
-  "St. Patrick's Day": '🍀',
-  "April Fools'": '🃏',
-  'Easter': '🐣',
-  'Earth Day': '🌍',
-  'Cinco de Mayo': '🇲🇽',
-  'Halloween': '🎃',
+  "Valentine's Day":  '💝',
+  "St. Patrick's Day":'🍀',
+  "April Fools'":     '🃏',
+  'Easter':           '🐣',
+  'Earth Day':        '🌍',
+  'Cinco de Mayo':    '🇲🇽',
+  'Halloween':        '🎃',
+};
+
+const MEETING_EMOJI = {
+  'Monthly Team Meeting':     '📅',
+  'Focus Sprint':             '⚡',
+  'QA Team Weekly':           '🔍',
+  "Let's Try New Tools":      '🛠️',
 };
 
 let currentYear, currentMonth;
@@ -337,7 +390,7 @@ const eventIndex = buildIndex();
 
 function init() {
   const today = new Date();
-  currentYear = today.getFullYear();
+  currentYear  = today.getFullYear();
   currentMonth = today.getMonth();
   render();
 }
@@ -345,7 +398,14 @@ function init() {
 function render() {
   renderLegend();
   renderGrid();
-  document.getElementById('month-label').textContent = MONTHS[currentMonth] + ' ' + currentYear;
+  document.getElementById('month-label').textContent =
+    MONTHS[currentMonth] + ' ' + currentYear;
+
+  // Highlight Today btn when viewing the current month
+  const today = new Date();
+  const isCurrent = currentYear === today.getFullYear() &&
+                    currentMonth === today.getMonth();
+  document.getElementById('today-btn').classList.toggle('is-current', isCurrent);
 }
 
 function renderLegend() {
@@ -364,6 +424,9 @@ function renderLegend() {
       <div class="legend-dot-dashed"></div><span>Fun Day</span>
     </div>
     <div class="legend-item">
+      <div class="legend-dot" style="background:#93c5fd"></div><span>Team Meeting</span>
+    </div>
+    <div class="legend-item">
       <div class="legend-dot" style="background:#f9a8d4"></div><span>Birthday</span>
     </div>
     <div class="legend-item">
@@ -374,16 +437,19 @@ function renderLegend() {
 
 function renderGrid() {
   const grid = document.getElementById('days-grid');
-  const today = new Date(); today.setHours(0,0,0,0);
-  const firstDay = new Date(currentYear, currentMonth, 1);
-  const lastDay  = new Date(currentYear, currentMonth + 1, 0);
-  const startPad = firstDay.getDay();
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  const firstDay  = new Date(currentYear, currentMonth, 1);
+  const lastDay   = new Date(currentYear, currentMonth + 1, 0);
+  const startPad  = firstDay.getDay();
   const totalCells = Math.ceil((startPad + lastDay.getDate()) / 7) * 7;
 
   let html = '';
   for (let i = 0; i < totalCells; i++) {
     const cellDate = new Date(currentYear, currentMonth, 1 - startPad + i);
     cellDate.setHours(0,0,0,0);
+
     const isOtherMonth = cellDate.getMonth() !== currentMonth;
     const isToday      = cellDate.getTime() === today.getTime();
     const isWeekend    = cellDate.getDay() === 0 || cellDate.getDay() === 6;
@@ -396,35 +462,46 @@ function renderGrid() {
     if (isWeekend)    cls += ' weekend';
 
     let evHtml = '<div class="events">';
-
     if (!isOtherMonth) {
-      // Official company holidays (days off)
+
+      // Company holidays (days off)
       dayEvents.filter(e => e.type === 'holiday').forEach(e => {
         evHtml += `<div class="event-pill event-holiday" title="${e.name} — Company Holiday">🏖️ ${e.name}</div>`;
       });
+
       // Fun observances
       dayEvents.filter(e => e.type === 'funday').forEach(e => {
         const emoji = FUNDAY_EMOJI[e.name] || '✨';
         evHtml += `<div class="event-pill event-funday" title="${e.name}">${emoji} ${e.name}</div>`;
       });
+
+      // Team-wide meetings
+      dayEvents.filter(e => e.type === 'meeting').forEach(e => {
+        const emoji = MEETING_EMOJI[e.name] || '📅';
+        evHtml += `<div class="event-pill event-meeting" title="${e.name}">${emoji} ${e.name}</div>`;
+      });
+
       // Birthdays
       dayEvents.filter(e => e.type === 'birthday').forEach(e => {
         evHtml += `<div class="event-pill event-birthday" title="${e.person}'s Birthday">🎂 ${e.person}</div>`;
       });
+
       // Anniversaries
       dayEvents.filter(e => e.type === 'anniversary').forEach(e => {
         const yrs = e.years ? ` (${e.years}yr)` : '';
         evHtml += `<div class="event-pill event-anniversary" title="${e.person}'s Work Anniversary">🏆 ${e.person}${yrs}</div>`;
       });
+
       // OOO
       const seen = new Set();
       dayEvents.filter(e => e.type === 'ooo').forEach(e => {
         if (seen.has(e.person)) return;
         seen.add(e.person);
-        evHtml += `<div class="event-pill" style="background:${lighten(e.color)}; color:${e.color}; border-left:2.5px solid ${e.color};" title="${e.person} — Out of Office">✈ ${e.person}</div>`;
+        evHtml += `<div class="event-pill"
+          style="background:${lighten(e.color)}; color:${e.color}; border-left:2.5px solid ${e.color};"
+          title="${e.person} — Out of Office">✈ ${e.person}</div>`;
       });
     }
-
     evHtml += '</div>';
 
     html += `<div class="${cls}">
@@ -442,6 +519,12 @@ document.getElementById('prev').addEventListener('click', () => {
 });
 document.getElementById('next').addEventListener('click', () => {
   if (++currentMonth > 11) { currentMonth = 0; currentYear++; }
+  render();
+});
+document.getElementById('today-btn').addEventListener('click', () => {
+  const today = new Date();
+  currentYear  = today.getFullYear();
+  currentMonth = today.getMonth();
   render();
 });
 
