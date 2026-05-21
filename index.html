@@ -253,16 +253,18 @@ const EVENTS = [
   { type: 'ooo', person: 'Ted',   start: '2026-03-11', end: '2026-03-13' },
   { type: 'ooo', person: 'Ted',   start: '2026-03-16', end: '2026-03-20' },
   { type: 'ooo', person: 'Ted',   start: '2026-03-23', end: '2026-03-27' },
-  { type: 'ooo', person: 'Bran',   start: '2026-03-27', end: '2026-03-27' },
+  { type: 'ooo', person: 'Bran',  start: '2026-03-27', end: '2026-03-27' },
   { type: 'ooo', person: 'Ted',   start: '2026-03-30', end: '2026-04-01' },
   { type: 'ooo', person: 'Alec',  start: '2026-03-30', end: '2026-03-31' },
-  { type: 'ooo', person: 'Bran', start: '2026-04-10', end: '2026-04-10' },
+  { type: 'ooo', person: 'Bran',  start: '2026-04-10', end: '2026-04-10' },
   { type: 'ooo', person: 'Bella', start: '2026-04-10', end: '2026-04-10' },
   { type: 'ooo', person: 'Bran',  start: '2026-04-16', end: '2026-04-17' },
   { type: 'ooo', person: 'Bella', start: '2026-04-17', end: '2026-04-17' },
   { type: 'ooo', person: 'Bella', start: '2026-05-20', end: '2026-05-20' },
   { type: 'ooo', person: 'Bella', start: '2026-05-22', end: '2026-05-22' },
+  { type: 'ooo', person: 'Bella', start: '2026-05-29', end: '2026-05-29' },
   { type: 'ooo', person: 'Bran',  start: '2026-07-07', end: '2026-07-10' },
+  { type: 'ooo', person: 'Bran',  start: '2027-03-01', end: '2027-03-08' },
 
   // ── Birthdays ──────────────────────────────────────────────
   // Format: { type: 'birthday', person: 'Name', date: 'YYYY-MM-DD' }
@@ -272,6 +274,12 @@ const EVENTS = [
   { type: 'birthday', person: 'Atarah', date: '2026-02-24' },
   { type: 'birthday', person: 'Ted',    date: '2026-03-16' },
   { type: 'birthday', person: 'Deonna', date: '2026-10-04' },
+  { type: 'birthday', person: 'Alec',   date: '2027-02-17' },
+  { type: 'birthday', person: 'Bran',   date: '2027-02-17' },
+  { type: 'birthday', person: 'Bella',  date: '2027-02-24' },
+  { type: 'birthday', person: 'Atarah', date: '2027-02-24' },
+  { type: 'birthday', person: 'Ted',    date: '2027-03-16' },
+  { type: 'birthday', person: 'Deonna', date: '2027-10-04' },
 
   // ── Work Anniversaries ────────────────────────────────────
   // Format: { type: 'anniversary', person: 'Name', date: 'YYYY-MM-DD', years: N }
@@ -294,6 +302,18 @@ const EVENTS = [
   { type: 'holiday', name: 'Christmas Day',   date: '2026-12-25' },
   { type: 'holiday', name: "New Year's Eve",  date: '2026-12-31' },
   { type: 'holiday', name: "New Year's Day",  date: '2027-01-01' },
+  { type: 'holiday', name: "New Year's Day",  date: '2027-01-01' },
+  { type: 'holiday', name: 'MLK Day',         date: '2027-01-19' },
+  { type: 'holiday', name: 'Memorial Day',    date: '2027-05-25' },
+  { type: 'holiday', name: 'Juneteenth',      date: '2027-06-19' },
+  { type: 'holiday', name: 'Independence Day',date: '2027-07-03' },
+  { type: 'holiday', name: 'Labor Day',       date: '2027-09-07' },
+  { type: 'holiday', name: 'Thanksgiving',    date: '2027-11-26' },
+  { type: 'holiday', name: 'Black Friday',    date: '2027-11-27' },
+  { type: 'holiday', name: 'Christmas Eve',   date: '2027-12-24' },
+  { type: 'holiday', name: 'Christmas Day',   date: '2027-12-25' },
+  { type: 'holiday', name: "New Year's Eve",  date: '2027-12-31' },
+  { type: 'holiday', name: "New Year's Day",  date: '2028-01-01' },
 
   // ── Fun Observances (not days off — just for fun ✨) ───────
   // Format: { type: 'funday', name: 'Name', date: 'YYYY-MM-DD' }
@@ -304,6 +324,13 @@ const EVENTS = [
   { type: 'funday', name: 'Earth Day',        date: '2026-04-22' },
   { type: 'funday', name: 'Cinco de Mayo',    date: '2026-05-05' },
   { type: 'funday', name: 'Halloween',        date: '2026-10-31' },
+  { type: 'funday', name: "Valentine's Day",  date: '2027-02-14' },
+  { type: 'funday', name: "St. Patrick's Day",date: '2027-03-17' },
+  { type: 'funday', name: "April Fools'",     date: '2027-04-01' },
+  { type: 'funday', name: 'Easter',           date: '2027-04-05' },
+  { type: 'funday', name: 'Earth Day',        date: '2027-04-22' },
+  { type: 'funday', name: 'Cinco de Mayo',    date: '2027-05-05' },
+  { type: 'funday', name: 'Halloween',        date: '2027-10-31' },
 
   // ── Team-wide Meetings ────────────────────────────────────
   // Format: { type: 'meeting', name: 'Meeting Name', date: 'YYYY-MM-DD' }
