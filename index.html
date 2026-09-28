@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QA Team Calendar</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    // Apply saved day/night choice before the page paints (avoids a flash)
+    (function () {
+      try {
+        if (localStorage.getItem('qa-cal-theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -191,11 +201,101 @@
     /* Work anniversaries */
     .event-anniversary { background: #fffbeb; color: #b45309; border-left: 2.5px solid #fcd34d; }
 
+    /* Out of office: color comes from each person's TEAM_MEMBERS color */
+    .event-ooo {
+      background: color-mix(in srgb, var(--c) 13%, transparent);
+      color: var(--c);
+      border-left: 2.5px solid var(--c);
+    }
+
     .today-indicator {
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
       background: #6366f1;
+    }
+
+    /* ── Day / night toggle ── */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 4px;
+    }
+    .theme-toggle button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      transition: background 0.15s, color 0.15s;
+    }
+    .theme-toggle button:hover { background: #f3f4f6; color: #111827; }
+    .theme-toggle button.active { background: #eef2ff; color: #6366f1; }
+    .theme-toggle svg { width: 17px; height: 17px; }
+
+    /* ============================================================
+       Night mode
+       ============================================================ */
+    [data-theme="dark"] body { background: #0f1117; color: #e5e7eb; }
+    [data-theme="dark"] .header h1 { color: #f3f4f6; }
+    [data-theme="dark"] .header h1 span { color: #818cf8; }
+
+    [data-theme="dark"] .today-btn,
+    [data-theme="dark"] .month-nav,
+    [data-theme="dark"] .theme-toggle {
+      background: #171a23;
+      border-color: #2a2f3b;
+    }
+    [data-theme="dark"] .today-btn { color: #9ca3af; }
+    [data-theme="dark"] .today-btn:hover,
+    [data-theme="dark"] .month-nav button:hover,
+    [data-theme="dark"] .theme-toggle button:hover {
+      background: #232733; color: #f3f4f6; border-color: #3a4050;
+    }
+    [data-theme="dark"] .today-btn.is-current {
+      color: #a5b4fc; background: #1e2140; border-color: #3f4480;
+    }
+    [data-theme="dark"] .month-nav button { color: #9ca3af; }
+    [data-theme="dark"] .month-label { color: #f3f4f6; }
+    [data-theme="dark"] .theme-toggle button { color: #6b7280; }
+    [data-theme="dark"] .theme-toggle button.active { background: #1e2140; color: #a5b4fc; }
+
+    [data-theme="dark"] .legend-item { color: #9ca3af; }
+    [data-theme="dark"] .legend-dot-dashed { background: rgba(217,70,239,0.15); border-color: #e879f9; }
+
+    [data-theme="dark"] .calendar {
+      background: #171a23;
+      border-color: #2a2f3b;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
+    }
+    [data-theme="dark"] .dow-row { background: #1b1f29; border-bottom-color: #2a2f3b; }
+    [data-theme="dark"] .dow-cell { color: #6b7280; }
+    [data-theme="dark"] .day-cell { border-color: #232733; }
+    [data-theme="dark"] .day-cell.other-month { background: #13161e; }
+    [data-theme="dark"] .day-number { color: #d1d5db; }
+    [data-theme="dark"] .day-cell.weekend .day-number { color: #6b7280; }
+    [data-theme="dark"] .day-cell.other-month .day-number { color: #3a3f4c; }
+    [data-theme="dark"] .day-cell.other-month.weekend .day-number { color: #30343f; }
+    [data-theme="dark"] .day-cell.today .day-number { background: #6366f1; color: #fff; }
+    [data-theme="dark"] .today-indicator { background: #818cf8; }
+
+    [data-theme="dark"] .event-holiday     { background: rgba(34,197,94,0.14);  color: #86efac; border-left-color: #22c55e; }
+    [data-theme="dark"] .event-funday      { background: rgba(217,70,239,0.14); color: #f0abfc; border-left-color: #d946ef; }
+    [data-theme="dark"] .event-meeting     { background: rgba(59,130,246,0.16); color: #93c5fd; border-left-color: #3b82f6; }
+    [data-theme="dark"] .event-birthday    { background: rgba(236,72,153,0.15); color: #f9a8d4; border-left-color: #ec4899; }
+    [data-theme="dark"] .event-anniversary { background: rgba(245,158,11,0.15); color: #fcd34d; border-left-color: #f59e0b; }
+    [data-theme="dark"] .event-ooo {
+      background: color-mix(in srgb, var(--c) 22%, transparent);
+      color: color-mix(in srgb, var(--c) 55%, #ffffff);
     }
   </style>
 </head>
@@ -210,6 +310,14 @@
         <button id="prev">&#8249;</button>
         <div class="month-label" id="month-label"></div>
         <button id="next">&#8250;</button>
+      </div>
+      <div class="theme-toggle" role="group" aria-label="Day or night mode">
+        <button id="theme-light" aria-label="Day mode" title="Day mode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <button id="theme-dark" aria-label="Night mode" title="Night mode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -600,8 +708,7 @@ function renderGrid() {
       dayEvents.filter(e => e.type === 'ooo').forEach(e => {
         if (seen.has(e.person)) return;
         seen.add(e.person);
-        evHtml += `<div class="event-pill"
-          style="background:${lighten(e.color)}; color:${e.color}; border-left:2.5px solid ${e.color};"
+        evHtml += `<div class="event-pill event-ooo" style="--c:${e.color};"
           title="${e.person} — Out of Office">✈ ${e.person}</div>`;
       });
     }
@@ -630,6 +737,21 @@ document.getElementById('today-btn').addEventListener('click', () => {
   currentMonth = today.getMonth();
   render();
 });
+
+// Day / night toggle (remembered per device)
+function setTheme(theme, save) {
+  const dark = theme === 'dark';
+  if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+  else document.documentElement.removeAttribute('data-theme');
+  document.getElementById('theme-light').classList.toggle('active', !dark);
+  document.getElementById('theme-dark').classList.toggle('active', dark);
+  document.getElementById('theme-light').setAttribute('aria-pressed', String(!dark));
+  document.getElementById('theme-dark').setAttribute('aria-pressed', String(dark));
+  if (save) { try { localStorage.setItem('qa-cal-theme', theme); } catch (e) {} }
+}
+document.getElementById('theme-light').addEventListener('click', () => setTheme('light', true));
+document.getElementById('theme-dark').addEventListener('click', () => setTheme('dark', true));
+setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light', false);
 
 init();
 </script>
